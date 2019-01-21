@@ -55,8 +55,8 @@ impl State for Game {
      */
     fn update(&mut self, window: &mut Window) -> Result<()> {
 	self._simon_update_struct.update(window);
-	rieke::update(window, self);
-	jan::update(window, self);
+	//rieke::update(window, self);
+	//jan::update(window, self);
     self._racingcar_update_struct.update(window);
 	Ok(())
    }
@@ -68,8 +68,8 @@ impl State for Game {
         window.clear(Color::WHITE)?;
         self._racingcar_update_struct.draw(window);
         self._simon_update_struct.draw(window);
-        rieke::draw(window, self);
-        jan::draw(window, self);
+        //rieke::draw(window, self);
+        //jan::draw(window, self);
 
         Ok(())
     }
