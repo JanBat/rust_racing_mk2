@@ -66,11 +66,11 @@ impl State for Game {
      */
     fn draw(&mut self, window: &mut Window) -> Result<()> {
         window.clear(Color::WHITE)?;
-
+        self._racingcar_update_struct.draw(window);
         self._simon_update_struct.draw(window);
         rieke::draw(window, self);
         jan::draw(window, self);
-        self._racingcar_update_struct.draw(window);
+
         Ok(())
     }
 }

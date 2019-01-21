@@ -9,7 +9,7 @@ use quicksilver::{
     graphics::{Background::Col, Color},
     lifecycle::{Settings, State, Window, run},
 };
-
+use std::f64::consts::PI;
 use ::{Game};
 
 use mathhelper;
@@ -18,7 +18,7 @@ use mathhelper;
 pub struct RacingCarUpdateStruct {
     pub speed:f64,
     pub direction:f64,
-    pub position:(u32,u32),
+    pub position:(f64,f64),
     pub steering: f64,
 
 }
@@ -26,7 +26,7 @@ pub struct RacingCarUpdateStruct {
 pub fn init() ->RacingCarUpdateStruct{
     RacingCarUpdateStruct{  speed:0.0,
                             direction:0.0,
-                            position:(100,100),
+                            position:(100.0,100.0),
                             steering:0.0,
                             }
 }
@@ -39,18 +39,21 @@ impl State for RacingCarUpdateStruct {
      fn update(&mut self, _window: &mut Window) -> Result<()> {
         //let car = &mut _game._racingcar_update_struct;
         //TODO: move the below (partially) to input_manager.rs(?)
-        if _window.keyboard()[Key::Left].is_down() {
-            self.steering = self.steering + 0.1;
+        if _window.keyboard()[Key::Right].is_down() {
+
+            //debug:
+            self.direction = self.direction +0.1;
+            //self.steering = self.steering + 0.1;
             if self.steering > 1.0 {
                 self.steering = 1.0;
             }
         }
-        if _window.keyboard()[Key::Right].is_down(){
-//      for testing purposes:
-//            let (x,y) = self.position;
-//            self.position = (x+1, y);
-////////////////////////////////////
-            self.steering = self.steering - 0.1;
+        if _window.keyboard()[Key::Left].is_down(){
+
+
+            //debug:
+            self.direction = self.direction -0.1;
+            //self.steering = self.steering - 0.1;
             if self.steering < -1.0 {
                 self.steering = -1.0;
             }
@@ -73,12 +76,12 @@ impl State for RacingCarUpdateStruct {
         //TODO continue here =)
          //simple stupid version:
 
-         self.direction += self.steering/30.0;   //"spaceship controls"
-         if self.direction > 3.1415 {
-             self.direction = 3.1415;
+         self.direction += self.steering/30.0;   //"spaceship controls" (TODO: cars drive in circles)
+         if self.direction > PI {
+             self.direction = self.direction - (2.0*PI);
          }
-         else if self.direction < -3.1415{
-             self.direction = -3.1415;
+         else if self.direction < (-1.0*PI){
+             self.direction = self.direction + (2.0*PI);
          }
 
          let dir = mathhelper::angleToDirectionVector(self.direction);
@@ -86,15 +89,16 @@ impl State for RacingCarUpdateStruct {
          let (posx, posy) = self.position;
          let newx = dirx + posx as f64;
          let newy = diry + posy as f64;
-
-         self.position = (newx as u32, newy as u32);
+         println!("dir:{:?}...x:{:?}...y:{:?}", self.direction, dirx, diry);
+         self.position = (newx, newy);
 
          Ok(())
     }
 
      fn draw(&mut self, _window: &mut Window) -> Result<()>{
         let (x,y) = self.position;
-         _window.draw_ex(&Circle::new((x, y), 10), Col(Color::BLUE), Transform::rotate(45), 0);
+         _window.draw_ex(&Circle::new((x as u32, y as u32), 10),Col(Color::BLUE) , Transform::rotate(45), 1);
+         //_window.draw(&Circle::new((x as u32, y as u32), 10), Col(Color::BLUE));
          Ok(())
     }
 }
