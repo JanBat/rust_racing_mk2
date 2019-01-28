@@ -48,7 +48,7 @@ impl State for RacingTrackUpdateStruct {
     fn update(&mut self, _window: &mut Window) -> Result<()> {
         //self.checkpoints.push(Vector::new(200, 200));
         //println!("checkpoints:{:?}", self.checkpoints);
-        
+
         Ok(())
     }
 
