@@ -17,7 +17,7 @@ pub struct SimonUpdateStruct {
 }
 
 pub fn init() ->SimonUpdateStruct{
-    SimonUpdateStruct{x_pos: 0, y_pos:0, asset: Asset::new(Image::load("./logo.png"))}
+    SimonUpdateStruct{x_pos: 0, y_pos:0, asset: Asset::new(Image::load("./image.png"))}
 }
 
 impl State for SimonUpdateStruct{

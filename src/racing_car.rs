@@ -89,7 +89,7 @@ impl State for RacingCarUpdateStruct {
          let (posx, posy) = self.position;
          let newx = dirx + posx as f64;
          let newy = diry + posy as f64;
-         println!("dir:{:?}...x:{:?}...y:{:?}", self.direction, dirx, diry);
+         //println!("dir:{:?}...x:{:?}...y:{:?}", self.direction, dirx, diry);
          self.position = (newx, newy);
 
          Ok(())
@@ -97,7 +97,7 @@ impl State for RacingCarUpdateStruct {
 
      fn draw(&mut self, _window: &mut Window) -> Result<()>{
         let (x,y) = self.position;
-         _window.draw_ex(&Circle::new((x as u32, y as u32), 10),Col(Color::BLUE) , Transform::rotate(45), 1);
+         _window.draw_ex(&Circle::new((x as u32, y as u32), 10),Col(Color::BLUE) , Transform::rotate(45), 100);
          //_window.draw(&Circle::new((x as u32, y as u32), 10), Col(Color::BLUE));
          Ok(())
     }

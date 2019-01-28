@@ -8,6 +8,7 @@ mod rieke;
 mod jan;
 mod input_manager;
 mod racing_car;
+mod racing_track;
 mod mathhelper;
 /**
  * Namespaces of different modules
@@ -29,6 +30,7 @@ pub struct Game {
     _jan_update_struct: jan::JanUpdateStruct,
     _input_update_struct: input_manager::InputUpdateStruct,
     _racingcar_update_struct: racing_car::RacingCarUpdateStruct,
+    _racingtrack_update_struct: racing_track::RacingTrackUpdateStruct,
 }
 
 /**
@@ -47,6 +49,7 @@ impl State for Game {
             _jan_update_struct: jan::init(),
             _input_update_struct: input_manager::init(),
             _racingcar_update_struct: racing_car::init(),
+            _racingtrack_update_struct: racing_track::init(),
         })
     }
 
@@ -58,7 +61,9 @@ impl State for Game {
 	//rieke::update(window, self);
 	//jan::update(window, self);
     self._racingcar_update_struct.update(window);
+    self._racingtrack_update_struct.update(window);
 	Ok(())
+
    }
 
     /**
@@ -66,8 +71,10 @@ impl State for Game {
      */
     fn draw(&mut self, window: &mut Window) -> Result<()> {
         window.clear(Color::WHITE)?;
+
         self._racingcar_update_struct.draw(window);
         self._simon_update_struct.draw(window);
+        self._racingtrack_update_struct.draw(window);
         //rieke::draw(window, self);
         //jan::draw(window, self);
 
