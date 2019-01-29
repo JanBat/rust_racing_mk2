@@ -35,7 +35,7 @@ pub fn init() ->RacingTrackUpdateStruct{
     V.push((200.0,500.0,false));  //checkpoint 5
     V.push((200.0,600.0,false));  //checkpoint 6
 
-
+//test comment
 
 
     RacingTrackUpdateStruct{
