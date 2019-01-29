@@ -44,6 +44,36 @@ pub fn init() ->RacingTrackUpdateStruct{
         raceTrackPic: Asset::new(Image::load("./image.png"))
     }
 }
+
+
+//check currently active checkpoint for proximity to racingcar
+//if close enough, activate next checkpoint
+//if last checkpoint got passed, start at the top
+//and maybe increase lap counter or something
+fn updateCheckpoints(updateStruct: &mut RacingTrackUpdateStruct ){
+    for i in 0..updateStruct.checkpoints.len(){
+        let checkpoint = updateStruct.checkpoints[i];
+        if checkpoint.2 == true{
+            //calculate distance:
+            let checkpointvector = Vector::new(checkpoint.0 as u32, checkpoint.1 as u32); //kinda meh place for the conversion
+            let carvector = Vector::new(updateStruct._racingcar_update_struct.position.0 as u32, updateStruct._racingcar_update_struct.position.1 as u32);
+            let dist = mathhelper::distance_between_coords(checkpointvector, carvector);
+            if dist < 20.0{
+                updateStruct.checkpoints[i].2 = false;
+                if i<updateStruct.checkpoints.len()-1{
+                    updateStruct.checkpoints[i+1].2 = true;
+                }
+                else{
+                    updateStruct.checkpoints[0].2 = true;
+                    //lap ++
+                }
+
+            }
+        }
+    }
+}
+
+
 impl State for RacingTrackUpdateStruct {
 
     fn new() -> Result<RacingTrackUpdateStruct> {
@@ -54,9 +84,12 @@ impl State for RacingTrackUpdateStruct {
         Ok(newTrack)
     }
 
+
+
     fn update(&mut self, _window: &mut Window) -> Result<()> {
         //self.checkpoints.push(Vector::new(200, 200));
         //println!("checkpoints:{:?}", self.checkpoints);
+        updateCheckpoints(self);
         self._racingcar_update_struct.update(_window);
         Ok(())
     }
