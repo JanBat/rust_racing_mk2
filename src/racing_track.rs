@@ -2,6 +2,7 @@ extern crate quicksilver;
 
 
 
+
 use quicksilver::{
     Result,
     geom::{Circle, Rectangle, Transform, Vector},
@@ -11,12 +12,17 @@ use quicksilver::{
 };
 use std::f64::consts::PI;
 use ::{Game};
-
 use mathhelper;
+use ::{racing_car};
 
-//representing a single RacingCar
+
+//a "Level" of the game
+
+
+
 pub  struct RacingTrackUpdateStruct {
     checkpoints:  Vec<(f64, f64, bool)>,
+    _racingcar_update_struct: racing_car::RacingCarUpdateStruct,
  }
 
 pub fn init() ->RacingTrackUpdateStruct{
@@ -30,9 +36,10 @@ pub fn init() ->RacingTrackUpdateStruct{
 
 
 
+
     RacingTrackUpdateStruct{
         checkpoints: V,
-
+        _racingcar_update_struct: racing_car::init(), //just one car for the moment
     }
 }
 impl State for RacingTrackUpdateStruct {
@@ -48,7 +55,7 @@ impl State for RacingTrackUpdateStruct {
     fn update(&mut self, _window: &mut Window) -> Result<()> {
         //self.checkpoints.push(Vector::new(200, 200));
         //println!("checkpoints:{:?}", self.checkpoints);
-
+        self._racingcar_update_struct.update(_window);
         Ok(())
     }
 
@@ -64,6 +71,11 @@ impl State for RacingTrackUpdateStruct {
             }
             _window.draw_ex(&Circle::new((vec.0 as u32, vec.1 as u32), 10),col , Transform::rotate(45), 50);
         }
+
+        //don't forget to draw the car/all cars:
+
+        self._racingcar_update_struct.draw(_window);
+
 
         Ok(())
     }

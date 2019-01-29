@@ -29,7 +29,7 @@ pub struct Game {
     _rieke_update_struct: rieke::RiekeUpdateStruct,
     _jan_update_struct: jan::JanUpdateStruct,
     _input_update_struct: input_manager::InputUpdateStruct,
-    _racingcar_update_struct: racing_car::RacingCarUpdateStruct,
+    //_racingcar_update_struct: racing_car::RacingCarUpdateStruct,
     _racingtrack_update_struct: racing_track::RacingTrackUpdateStruct,
 }
 
@@ -48,7 +48,7 @@ impl State for Game {
             _rieke_update_struct: rieke::init(),
             _jan_update_struct: jan::init(),
             _input_update_struct: input_manager::init(),
-            _racingcar_update_struct: racing_car::init(),
+            //_racingcar_update_struct: racing_car::init(),
             _racingtrack_update_struct: racing_track::init(),
         })
     }
@@ -60,7 +60,7 @@ impl State for Game {
 	self._simon_update_struct.update(window);
 	//rieke::update(window, self);
 	//jan::update(window, self);
-    self._racingcar_update_struct.update(window);
+    //self._racingcar_update_struct.update(window);
     self._racingtrack_update_struct.update(window);
 	Ok(())
 
@@ -72,7 +72,7 @@ impl State for Game {
     fn draw(&mut self, window: &mut Window) -> Result<()> {
         window.clear(Color::WHITE)?;
 
-        self._racingcar_update_struct.draw(window);
+      //  self._racingcar_update_struct.draw(window);
         self._simon_update_struct.draw(window);
         self._racingtrack_update_struct.draw(window);
         //rieke::draw(window, self);
@@ -86,7 +86,7 @@ impl State for Game {
  * Main function which is called when starting the game
  */
 fn main() {
-    run::<Game>("Draw Geometry", Vector::new(800, 600), Settings::default());
+    run::<Game>("Superawesome Rust Racing Game", Vector::new(800, 600), Settings::default());
 }
 
 
