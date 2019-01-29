@@ -5,10 +5,10 @@ extern crate quicksilver;
 
 use quicksilver::{
     Result,
-    geom::{Circle, Rectangle, Transform, Vector},
+    geom::{Circle, Rectangle, Shape, Transform, Vector},
     input::{Key},
-    graphics::{Background::Col, Color},
-    lifecycle::{Settings, State, Window, run},
+    graphics::{Background::Col, Background::Img, Color, Image},
+    lifecycle::{Asset, Settings, State, Window, run},
 };
 use std::f64::consts::PI;
 use ::{Game};
@@ -23,6 +23,7 @@ use ::{racing_car};
 pub  struct RacingTrackUpdateStruct {
     checkpoints:  Vec<(f64, f64, bool)>,
     _racingcar_update_struct: racing_car::RacingCarUpdateStruct,
+    raceTrackPic: Asset<Image>,
  }
 
 pub fn init() ->RacingTrackUpdateStruct{
@@ -40,6 +41,7 @@ pub fn init() ->RacingTrackUpdateStruct{
     RacingTrackUpdateStruct{
         checkpoints: V,
         _racingcar_update_struct: racing_car::init(), //just one car for the moment
+        raceTrackPic: Asset::new(Image::load("./image.png"))
     }
 }
 impl State for RacingTrackUpdateStruct {
@@ -62,6 +64,9 @@ impl State for RacingTrackUpdateStruct {
     fn draw(&mut self, _window: &mut Window) -> Result<()>{
 
 
+
+        //draw the checkpoints:
+
         for i in 0..self.checkpoints.len(){
             let vec = self.checkpoints[i];
             let mut col = Col(Color::GREEN);
@@ -72,11 +77,19 @@ impl State for RacingTrackUpdateStruct {
             _window.draw_ex(&Circle::new((vec.0 as u32, vec.1 as u32), 10),col , Transform::rotate(45), 50);
         }
 
+
+
         //don't forget to draw the car/all cars:
 
         self._racingcar_update_struct.draw(_window);
 
 
-        Ok(())
+        //draw racetrack
+        self.raceTrackPic.execute(|image| {
+            _window.draw(&image.area().with_center((400, 300)), Img(&image));
+            Ok(())
+        })
+
+
     }
 }

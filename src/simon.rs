@@ -13,11 +13,11 @@ use ::{Game};
 pub struct SimonUpdateStruct {
     pub x_pos: i32,
     pub y_pos: i32,
-    asset: Asset<Image>
+    //asset: Asset<Image>
 }
 
-pub fn init() ->SimonUpdateStruct{
-    SimonUpdateStruct{x_pos: 0, y_pos:0, asset: Asset::new(Image::load("./image.png"))}
+pub fn init() ->SimonUpdateStruct {
+    SimonUpdateStruct { x_pos: 0, y_pos: 0 }  /*, asset: Asset::new(Image::load("./image.png"))*/  //moved to racing_track
 }
 
 impl State for SimonUpdateStruct{
@@ -32,12 +32,12 @@ impl State for SimonUpdateStruct{
 
     fn draw(&mut self, _window: &mut Window) -> Result<()> {
         //_window.clear(Color::WHITE)?;
-         self.asset.execute(|image| {
-            _window.draw(&image.area().with_center((400, 300)), Img(&image));
-            Ok(())
-        })
+         //self.asset.execute(|image| {
+         //   _window.draw(&image.area().with_center((400, 300)), Img(&image));
+         //   Ok(())
+        //})
         //_window.draw_ex(&Rectangle::new((100, 100), (32, 32)), Col(Color::BLUE), Transform::rotate(45), 0);
-        //Ok(()); //Ok ok?
+        Ok(()) //Ok ok?
     }
 
 }
